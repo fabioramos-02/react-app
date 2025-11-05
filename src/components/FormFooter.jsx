@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';  // Adicione esta linha no topo do arquivo
 /**
  * FormFooter
  *
