@@ -1,5 +1,5 @@
+// src/pages/Login.jsx
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import ErrorMessage from "../components/ErrorMessage";
@@ -7,11 +7,16 @@ import FormFooter from "../components/FormFooter";
 import FormHeader from "../components/FormHeader";
 import Divider from "../components/Divider";
 import SocialButton from "../components/SocialButton";
+import Checkbox from "../components/Checkbox"; // Importando o novo componente Checkbox
+import LinkButton from "../components/LinkButton"; // Importando o novo componente LinkButton
+import SnackBar from "../components/SnackBar"; // Importando o componente SnackBar
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const [lembrarMe, setLembrarMe] = useState(false); // Controlando o estado do checkbox
+  const [showSnackBar, setShowSnackBar] = useState(false); // Controlando a exibição do SnackBar
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +29,12 @@ function Login() {
     // Simulação de login
     console.log("Login:", { email, senha });
     setErro("");
-    alert("Login realizado com sucesso!");
+    
+    // Exibir o SnackBar de sucesso
+    setShowSnackBar(true);
+    setTimeout(() => {
+      setShowSnackBar(false);
+    }, 3000); // O SnackBar desaparece após 3 segundos
   };
 
   return (
@@ -88,27 +98,17 @@ function Login() {
               {/* Mensagem de Erro */}
               {erro && <ErrorMessage message={erro} />}
 
-              {/* Checkbox Lembrar */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="lembrar"
-                    type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label
-                    htmlFor="lembrar"
-                    className="ml-2 block text-sm text-gray-700"
-                  >
-                    Lembrar-me
-                  </label>
-                </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-blue-600 hover:text-blue-500"
-                >
+              {/* Checkbox Lembrar e Link Esqueceu a senha lado a lado */}
+              <div className="flex items-center space-x-4">
+                <Checkbox
+                  id="lembrar"
+                  label="Lembrar-me"
+                  checked={lembrarMe}
+                  onChange={(e) => setLembrarMe(e.target.checked)}
+                />
+                <LinkButton to="#" className="text-sm font-medium text-blue-600 hover:text-blue-500">
                   Esqueceu a senha?
-                </a>
+                </LinkButton>
               </div>
 
               {/* Botão Submit */}
@@ -147,11 +147,7 @@ function Login() {
               <SocialButton
                 platform="Facebook"
                 icon={
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="#1877F2"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 }
@@ -169,6 +165,13 @@ function Login() {
           © 2024 Componentes Web. Todos os direitos reservados.
         </p>
       </div>
+
+      {/* SnackBar */}
+      <SnackBar
+        message="Login realizado com sucesso!"
+        show={showSnackBar}
+        onClose={() => setShowSnackBar(false)}
+      />
     </div>
   );
 }

@@ -1,43 +1,51 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Input from '../components/Input';
-import Button from '../components/Button';
-import ErrorMessage from '../components/ErrorMessage';
-import FormFooter from '../components/FormFooter';
-import FormHeader from '../components/FormHeader';
-import Divider from '../components/Divider';
-import SocialButton from '../components/SocialButton';
+import { useState } from "react";
+import { Link, redirect } from "react-router-dom";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import ErrorMessage from "../components/ErrorMessage";
+import FormFooter from "../components/FormFooter";
+import FormHeader from "../components/FormHeader";
+import Divider from "../components/Divider";
+import SocialButton from "../components/SocialButton";
+import SnackBar from "../components/SnackBar";
 
 function Cadastro() {
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [erro, setErro] = useState('');
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [showSnackBar, setShowSnackBar] = useState(false); // Controlando a exibição do SnackBar
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validação dos campos
     if (!nome || !email || !senha || !confirmarSenha) {
-      setErro('Por favor, preencha todos os campos');
+      setErro("Por favor, preencha todos os campos");
       return;
     }
 
     if (senha !== confirmarSenha) {
-      setErro('As senhas não coincidem');
+      setErro("As senhas não coincidem");
       return;
     }
 
     if (senha.length < 6) {
-      setErro('A senha deve ter no mínimo 6 caracteres');
+      setErro("A senha deve ter no mínimo 6 caracteres");
       return;
     }
 
     // Simulação de cadastro
-    console.log('Cadastro:', { nome, email, senha });
-    setErro('');
-    alert('Cadastro realizado com sucesso!');
+    console.log("Cadastro:", { nome, email, senha });
+    setErro("");
+     // Exibir o SnackBar de sucesso
+    setShowSnackBar(true);
+    setTimeout(() => {
+      setShowSnackBar(false);
+    }, 3000); // O SnackBar desaparece após 3 segundos
+    // Redirecionar para a página de login após o cadastro
+    redirect("/");
   };
 
   return (
@@ -59,7 +67,12 @@ function Cadastro() {
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="João da Silva"
                 icon={
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -78,7 +91,12 @@ function Cadastro() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
                 icon={
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -96,7 +114,12 @@ function Cadastro() {
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 icon={
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -114,7 +137,12 @@ function Cadastro() {
                 value={confirmarSenha}
                 onChange={(e) => setConfirmarSenha(e.target.value)}
                 icon={
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -135,12 +163,15 @@ function Cadastro() {
                   type="checkbox"
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
                 />
-                <label htmlFor="termos" className="ml-2 block text-sm text-gray-700">
-                  Eu aceito os{' '}
+                <label
+                  htmlFor="termos"
+                  className="ml-2 block text-sm text-gray-700"
+                >
+                  Eu aceito os{" "}
                   <a href="#" className="text-blue-600 hover:text-blue-500">
                     Termos de Uso
-                  </a>
-                  {' '}e a{' '}
+                  </a>{" "}
+                  e a{" "}
                   <a href="#" className="text-blue-600 hover:text-blue-500">
                     Política de Privacidade
                   </a>
@@ -178,16 +209,20 @@ function Cadastro() {
                     />
                   </svg>
                 }
-                onClick={() => console.log('Cadastro com Google')}
+                onClick={() => console.log("Cadastro com Google")}
               />
               <SocialButton
                 platform="Facebook"
                 icon={
-                  <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="#1877F2"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 }
-                onClick={() => console.log('Cadastro com Facebook')}
+                onClick={() =>  console.log("Cadastro com Facebook")}
               />
             </div>
           </div>
@@ -201,6 +236,12 @@ function Cadastro() {
           © 2024 Componentes Web. Todos os direitos reservados.
         </p>
       </div>
+      {/* SnackBar */}
+      <SnackBar
+        show={showSnackBar}
+        message="Cadastro realizado com sucesso!"
+        onClose={() => setShowSnackBar(false)}
+      />
     </div>
   );
 }
