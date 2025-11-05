@@ -95,7 +95,6 @@ function Cadastro() {
                 type="password"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
-                placeholder="••••••••"
                 icon={
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -114,7 +113,6 @@ function Cadastro() {
                 type="password"
                 value={confirmarSenha}
                 onChange={(e) => setConfirmarSenha(e.target.value)}
-                placeholder="••••••••"
                 icon={
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -195,7 +193,7 @@ function Cadastro() {
           </div>
 
           {/* Footer */}
-          <FormFooter />
+          <FormFooter linkTo="/" linkText="Já tem uma conta?" />
         </div>
 
         {/* Copyright */}

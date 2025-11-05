@@ -161,7 +161,7 @@ function Login() {
           </div>
 
           {/* Footer */}
-          <FormFooter />
+          <FormFooter linkTo="/cadastro" linkText="Não tem uma conta?" />
         </div>
 
         {/* Copyright */}
